@@ -1,4 +1,3 @@
-
 """
 Cobbler's Postgresql >=9.4 database based object serializer.
 Experimental version.
