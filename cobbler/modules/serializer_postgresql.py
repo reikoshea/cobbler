@@ -1,5 +1,5 @@
 """
-Cobbler's Postgresql >=9.4 database based object serializer.
+Cobbler's Postgresql >9.4 database based object serializer.
 Experimental version.
 
 This program is free software; you can redistribute it and/or modify
@@ -109,6 +109,8 @@ def serialize_item(collection, item):
         pgsql_cur.execute(query,
                           (collection.collection_type(), json.dumps(_dict)))
     pgsql_conn.commit()
+    pgsql_cur.close()
+    pgsql_conn.close()
 
 
 def serialize_delete(collection, item):
@@ -124,6 +126,8 @@ def serialize_delete(collection, item):
     query = "DELETE FROM cobbler WHERE type = %s and doc->>'name' = %s"
     pgsql_cur.execute(query, (collection.collection_type(), item.name))
     pgsql_conn.commit()
+    pgsql_cur.close()
+    pgsql_conn.close()
 
 
 def serialize(collection):
@@ -163,6 +167,8 @@ def deserialize_raw(collection_type):
         ret = pgsql_cur.execute(query, (collection_type,))
         for x in pgsql_cur.fetchall():
             results.append(x[0])
+        pgsql_cur.close()
+        pgsql_conn.close()
         return results
 
 
