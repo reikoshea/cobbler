@@ -1,0 +1,1 @@
+CREATE TABLE cobbler (id SERIAL PRIMARY KEY, type VARCHAR(50), doc JSONB);
